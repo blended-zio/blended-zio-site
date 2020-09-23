@@ -1,5 +1,9 @@
 # blended-zio-jmx
 
+## Repository
+
+
+
 All _blended_ applications require some basic JMX functionality:
 
 ## MBean Server facade
@@ -43,9 +47,13 @@ Within _Blended 3_ this is implemented by publishing corresponding events on the
 The ZIO implementation should migrate the actor based solution to a ZIO module and provide the service via a ZLayer to other modules within _Blended ZIO_. Also, the publishing of the group summaries to should be decoupled from the collector Service and implemented as an a service, which requires the collector within it's environment.
 {{< /hint >}}
 
-## Functionality to be ported
+[Read more on the implementation details](servicemetrics)
+
+## Migration ToDo's
 
 * [x] Service Invocation Metrics
+  * [ ] Implement the service access, so that a singleton instance will be used
+  * [ ] Refactor the tests to use ZIO's property based testing
 * [ ] MBeanServer Facade
 * [ ] JMX Publisher for arbitrary case classes
 

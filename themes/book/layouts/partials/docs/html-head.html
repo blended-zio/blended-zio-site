@@ -18,6 +18,7 @@
 <!-- Theme stylesheet, you can customize scss by creating `assets/custom.scss` in your website -->
 {{- $styles := resources.Get "book.scss" | resources.ExecuteAsTemplate "book.scss" . | resources.ToCSS | resources.Minify | resources.Fingerprint }}
 <link rel="stylesheet" href="{{ $styles.RelPermalink }}" integrity="{{ $styles.Data.Integrity }}">
+<link rel="stylesheet" href="/gitribbon.css" />
 
 {{- if default true .Site.Params.BookSearch }}
 {{- $searchJSFile := printf "%s.search.js" .Language.Lang }}

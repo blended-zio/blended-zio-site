@@ -4,6 +4,7 @@ title = "Blended - ZIO"
 theme = "book"
 
 [params]
+  GitRibbon = "Fork me on Azure"
   BookMenuBundle = "/menu"
 
 [markup]

@@ -1,0 +1,8 @@
+{{ if .Params.giturl }}
+<a
+  class="git-fork-ribbon"
+  href="{{ .Params.giturl }}"
+  data-ribbon="{{.Site.Params.GitRibbon}}" title="{{.Site.Params.GitRibbon}}">
+  {{.Site.Params.GitRibbon}}
+</a>
+{{ end }}

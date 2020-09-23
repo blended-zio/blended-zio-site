@@ -51,7 +51,7 @@
 {{ end }}
 
 {{ if ($scratch.Get "collected") }}
-  {{ $extract := delimit . "\n" }}
+  {{ $extract := delimit ($scratch.Get "collected") "\n" }}
   {{ (print "```" ($scratch.Get "lang") " {linenos=true,linenostart=" ($scratch.Get "lineno") "}\n" $extract "\n```\n") | markdownify }}
 {{ else }}
   <blockquote class="book-hint warning">
