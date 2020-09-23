@@ -3,6 +3,12 @@
 {{ $lines := split $code "\n" }}
 {{ $scratch := newScratch }}
 
+{{ if (.Get "lang") }}
+  {{ $scratch.Set "lang" (.Get "lang") }}
+{{ else }}
+  {{ $scratch.Set "lang" "scala" }}
+{{ end }}
+
 {{ $scratch.Set "hasSection" false }}
 {{ if (.Get "section") }}
   {{ $scratch.Set "hasSection" true }}
@@ -20,8 +26,11 @@
 {{ range $index, $line := $lines }}
 
   {{ if $scratch.Get "hasSection" }}
-    {{ $pattern := printf "doctag<%s>" $section }}
-    {{ $scratch.Set "match" ((findRE $pattern $line) | len) }}
+    {{ $scratch.Set "pattern" (printf "doctag<%s>" $section) }}
+    {{ if $scratch.Get "collecting" }}
+      {{ $scratch.Set "pattern" (printf "end:%s" ($scratch.Get "pattern")) }}
+    {{ end }}
+    {{ $scratch.Set "match" ((findRE ($scratch.Get "pattern") $line) | len) }}
   {{ else }}
     {{ $scratch.Set "match" 0 }}
   {{ end }}
@@ -41,7 +50,8 @@
   {{ end }}
 {{ end }}
 
-{{ $extract := delimit ($scratch.Get "collected") "\n" }}
+{{ with $scratch.Get "collected" }}
+  {{ $extract := delimit . "\n" }}
 
-{{ $lang := .Get "lang" }}
-{{ (print "```" $lang " {linenos=true,linenostart=" ($scratch.Get "lineno") "}\n" $extract "\n```\n") | markdownify }}
+  {{ (print "```" ($scratch.Get "lang") " {linenos=true,linenostart=" ($scratch.Get "lineno") "}\n" $extract "\n```\n") | markdownify }}
+{{ end }}
