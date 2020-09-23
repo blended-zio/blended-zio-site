@@ -1,0 +1,3 @@
+[submodule "blended-zio-jmx"]
+	path = content/modules/blended-zio-jmx
+	url = https://blended-zio@dev.azure.com/blended-zio/blended-zio/_git/blended-zio-jmx

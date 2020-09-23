@@ -1,0 +1,47 @@
+{{ $section := .Get "section" }}
+{{ $code := readFile (.Get "file") }}
+{{ $lines := split $code "\n" }}
+{{ $scratch := newScratch }}
+
+{{ $scratch.Set "hasSection" false }}
+{{ if (.Get "section") }}
+  {{ $scratch.Set "hasSection" true }}
+{{ end }}
+
+{{ if ($scratch.Get "hasSection") }}
+  {{ $scratch.Set "collecting" false }}
+  {{ $scratch.Set "pending" true }}
+{{ else }}
+  {{ $scratch.Set "collecting" true }}
+  {{ $scratch.Set "pending" false }}
+  {{ $scratch.Set "lineno" 1 }}
+{{ end }}
+
+{{ range $index, $line := $lines }}
+
+  {{ if $scratch.Get "hasSection" }}
+    {{ $pattern := printf "doctag<%s>" $section }}
+    {{ $scratch.Set "match" ((findRE $pattern $line) | len) }}
+  {{ else }}
+    {{ $scratch.Set "match" 0 }}
+  {{ end }}
+
+  {{ if $scratch.Get "collecting" }}
+    {{ if and (gt ($scratch.Get "match") 0) ($scratch.Get "hasSection") }}
+      {{ $scratch.Set "collecting" false }}
+      {{ $scratch.Set "pending" false }}
+    {{ else }}
+      {{ $scratch.Add "collected" ( slice $line ) }}
+    {{ end }}
+  {{ else }}
+    {{ if and (gt ($scratch.Get "match") 0) ($scratch.Get "pending") }}
+      {{ $scratch.Set "lineno" ($index | add 2) }}
+      {{ $scratch.Set "collecting" true }}
+    {{ end }}
+  {{ end }}
+{{ end }}
+
+{{ $extract := delimit ($scratch.Get "collected") "\n" }}
+
+{{ $lang := .Get "lang" }}
+{{ (print "```" $lang " {linenos=true,linenostart=" ($scratch.Get "lineno") "}\n" $extract "\n```\n") | markdownify }}
