@@ -1,4 +1,9 @@
 ---
 title: "Foo"
-date: 21.09.2021
+date: "2020-09-23"
+categories:
+  - Cat 1
+tags:
+  - foo
+  - bar
 ---

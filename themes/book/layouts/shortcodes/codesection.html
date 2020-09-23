@@ -50,8 +50,11 @@
   {{ end }}
 {{ end }}
 
-{{ with $scratch.Get "collected" }}
+{{ if ($scratch.Get "collected") }}
   {{ $extract := delimit . "\n" }}
-
   {{ (print "```" ($scratch.Get "lang") " {linenos=true,linenostart=" ($scratch.Get "lineno") "}\n" $extract "\n```\n") | markdownify }}
+{{ else }}
+  <blockquote class="book-hint warning">
+    The code section from <code>{{ .Get "file" }}</code> {{ with $section }} with section <code>{{ . }}</code>{{ end }} could not be found.
+  </blockquote>
 {{ end }}
