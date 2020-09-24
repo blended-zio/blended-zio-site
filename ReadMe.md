@@ -1,6 +1,6 @@
 # Blended ZIO documentation
 
-This site is built with [HUGO](https://gohugo.io/), version 0.75 and the [HUGO book template](https://themes.gohugo.io/hugo-book/) with slight modifications.
+This [site](http://blended-scala.org) is built with [HUGO](https://gohugo.io/), version 0.75 and the [HUGO book template](https://themes.gohugo.io/hugo-book/) with slight modifications.
 
 To build the site, check out the repository und make sure, the submodules are also updated:
 
@@ -93,7 +93,7 @@ Example:
 ```
 ---
 giturl : "https://dev.azure.com/blended-zio/_git/blended-zio"
-gitribbon : "Edit me on Azure"
+gitribbon : "Edit me on Github"
 ---
 ... Page content omitted ...
 ```
