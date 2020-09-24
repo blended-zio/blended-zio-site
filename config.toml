@@ -3,7 +3,10 @@ languageCode = "en-us"
 title = "Blended - ZIO"
 theme = "book"
 
+enableGitInfo = true
+
 [params]
+  BookRepo = "https://blended-zio@dev.azure.com/blended-zio/blended-zio/_git/blended-zio"
   GitRibbon = "Fork me on Azure"
   BookMenuBundle = "/menu"
 
@@ -15,5 +18,5 @@ theme = "book"
     lineNoStart = 1
     lineNos = false
     lineNumbersInTable = true
-    style = "monokai"
+    style = "manni"
     tabWidth = 2

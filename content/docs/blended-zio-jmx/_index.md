@@ -1,8 +1,7 @@
+---
+giturl: "https://dev.azure.com/blended-zio/blended-zio/_git/blended-zio-jmx"
+---
 # blended-zio-jmx
-
-## Repository
-
-
 
 All _blended_ applications require some basic JMX functionality:
 

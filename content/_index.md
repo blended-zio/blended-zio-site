@@ -6,6 +6,8 @@ For now this is a personal project to learn about FP by migrating (rewriting) a 
 
 Even though it is my intent to complete the migration, paid projects might take precedence.
 
+Refer to the individual modules to get more information about the module, its functions within _Blended 3_ and the migration status.
+
 ### Heritage
 
 This project is based on [Blended](https://github.com/woq-blended/blended), an integration framework implemented on top of Scala 2.13, Akka, Akka Http and Akka Streams. It is currently in it's 3rd productive generation.
@@ -15,6 +17,8 @@ The first generation of Blended has been implemented in Java and has used [Activ
 Also with version 2 we finished our integration test framework to automatically spin up our test environments in docker and use docker based integration tests.
 
 With version 3 of the framework we have replaced Karaf with our own OSGi container framework written in Scala and all Camel based integration flows have been rewritten to Akka Streams.
+
+For better orientation within the [original project](https://github.com/woq-blended/blended) and the migrated modules [here](/blended_usecases) is an overview of the _Blended_ use cases.
 
 ### Moving forward
 
