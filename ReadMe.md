@@ -51,7 +51,7 @@ flowchart LR
 
 ### codesection shortcode
 
-To help with code documentation, the various modules are included in the site via submodules, so the code con be referenced by a specialized HUGO shortcode.
+To help with code documentation, the various modules are included in the site via submodules, so the code con be referenced by a specialized HUGO shortcode, [codesection](https://dev.azure.com/blended-zio/blended-zio/_git/blended-zio?path=%2Fthemes%2Fbook%2Flayouts%2Fshortcodes%2Fcodesection.html).
 
 For example:
 
