@@ -5,7 +5,7 @@ This site is built with [HUGO](https://gohugo.io/), version 0.75 and the [HUGO b
 To build the site, check out the repository und make sure, the submodules are also updated:
 
 ```bash
-$ git clone https://blended-zio@dev.azure.com/blended-zio/blended-zio/_git/blended-zio
+$ git clone https://github.com/blended-zio/blended-zio-site.git
 $ cd blended-zio
 $ git submodule init
 $ git submodule update
@@ -51,7 +51,7 @@ flowchart LR
 
 ### codesection shortcode
 
-To help with code documentation, the various modules are included in the site via submodules, so the code con be referenced by a specialized HUGO shortcode, [codesection](https://dev.azure.com/blended-zio/blended-zio/_git/blended-zio?path=%2Fthemes%2Fbook%2Flayouts%2Fshortcodes%2Fcodesection.html).
+To help with code documentation, the various modules are included in the site via submodules, so the code con be referenced by a specialized HUGO shortcode, [codesection](https://github.com/blended-zio/blended-zio-site/blob/main/themes/book/layouts/shortcodes/codesection.html).
 
 For example:
 
