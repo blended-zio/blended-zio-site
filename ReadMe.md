@@ -92,7 +92,7 @@ For example, the main documentation pages display a `Edit me on Azure` ribbon.
 Example:
 ```
 ---
-giturl : "https://dev.azure.com/blended-zio/_git/blended-zio"
+giturl : "https://github.com/blended-zio/blended-zio-site"
 gitribbon : "Edit me on Github"
 ---
 ... Page content omitted ...
