@@ -1,6 +1,6 @@
 ---
-giturl : "https://dev.azure.com/blended-zio/_git/blended-zio"
-gitribbon : "Edit me on Azure"
+giturl : "https://github.com/blended-zio/blended-zio-site"
+gitribbon : "Edit me on Github"
 ---
 # Blended ZIO
 

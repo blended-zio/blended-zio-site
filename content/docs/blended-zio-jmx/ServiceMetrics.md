@@ -1,5 +1,5 @@
 ---
-giturl: "https://dev.azure.com/blended-zio/blended-zio/_git/blended-zio-jmx"
+giturl: "https://github.com/blended-zio/blended-zio-jmx"
 ---
 
 # ZIO based Service Metrics implementation

@@ -1,0 +1,3 @@
+[submodule "content/modules/blended-zio-jmx"]
+	path = content/modules/blended-zio-jmx
+	url = https://github.com/blended-zio/blended-zio-jmx.git
