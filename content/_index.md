@@ -1,3 +1,7 @@
+---
+giturl : "https://dev.azure.com/blended-zio/_git/blended-zio"
+gitribbon : "Edit me on Azure"
+---
 # Blended ZIO
 
 ## About this project
@@ -28,7 +32,7 @@ This is easier said than done, but nevertheless I have created the _Blended ZIO_
 
 * The code base of _Blended 3_ is not functional at all. It uses untyped actors under the covers which is one of the pain points when refactoring is required. The developer has to understand the interface in terms of which messages may be sent to the actors and which are the responses, but the type system and the compiler are of little to no help in understanding these interfaces. _Blended ZIO_ on the other hand shall be as functional as possible.
 
-  I have given some thought how to get from _Blended 3_ to _Blended ZIO_ and have weighed _refactor_ against _rewrite_. After going through quite a bit of documentation, asking on the forum etc. I am leaning towards a rewrite. This decision may swing into the other direction again, but even as I consider myself an to be an experienced (Scala) developer I feel that refactoring towards to ZIO might require me to refactor modules which I am going to rewrite sooner or later anyway.
+  I have given some thought how to get from _Blended 3_ to _Blended ZIO_ and have weighed _refactor_ against _rewrite_. After going through quite a bit of documentation, asking on the forum etc. I am leaning towards a rewrite. This decision may swing into the other direction again, but even as I consider myself to be an experienced (Scala) developer I feel that refactoring towards to ZIO might require me to refactor modules which I am going to rewrite sooner or later anyway.
 
 * _Blended 3_ lives in a single repository and has grown to more than 60 modules within that repo. While that is convenient for refactoring on the global project level, the entire build process sometimes lacks flexibility. The latter has been addressed by moving the build to [Mill](http://www.lihaoyi.com/mill/), but still the build process feels somewhat complicated. With Blended ZIO, the modules shall become smaller and concentrate on a specific functionality.
 

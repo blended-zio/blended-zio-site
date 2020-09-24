@@ -1,6 +1,8 @@
 ---
 title: "Blended Use Cases"
-date: "2020-09-23"
+giturl : "https://dev.azure.com/blended-zio/_git/blended-zio"
+gitribbon : "Edit me on Azure"
+---
 ---
 # An overview of requirements for Blended
 

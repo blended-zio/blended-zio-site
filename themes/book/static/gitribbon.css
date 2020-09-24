@@ -1,7 +1,7 @@
 
 /*!
  * "Fork me on git" CSS ribbon v0.2.3 | MIT License
- * https://git.com/simonwhitaker/github-fork-ribbon-css
+ * https://github.com/simonwhitaker/github-fork-ribbon-css
 */
 
 .git-fork-ribbon {
@@ -54,7 +54,7 @@
   padding: .38em 0;
 
   /* Set the base colour */
-  background-color: #a00;
+  background-color: #00a;
 
   /* Set a gradient: transparent black at the top to almost-transparent black at the bottom */
   background-image: -webkit-gradient(linear, left top, left bottom, from(rgba(0, 0, 0, 0)), to(rgba(0, 0, 0, 0.15)));

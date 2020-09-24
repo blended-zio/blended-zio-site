@@ -1,8 +1,20 @@
 {{ if .Params.giturl }}
+
+{{ $scratch := newScratch }}
+
+{{ if (.Params.gitribbon) }}
+  {{ $scratch.Set "ribbon" .Params.GitRibbon }}
+{{ else }}
+  {{ $scratch.Set "ribbon" .Site.Params.GitRibbon }}
+{{ end }}
+
+{{ $ribbon := $scratch.Get "ribbon" }}
+
 <a
   class="git-fork-ribbon"
   href="{{ .Params.giturl }}"
-  data-ribbon="{{.Site.Params.GitRibbon}}" title="{{.Site.Params.GitRibbon}}">
-  {{.Site.Params.GitRibbon}}
+  data-ribbon="{{ $ribbon }}" title="{{ $ribbon }}">
+  {{ $ribbon }}
 </a>
+
 {{ end }}
