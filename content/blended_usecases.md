@@ -15,15 +15,15 @@ For the sake of this article a _Blended_ based application instance running on t
 
 ### General architecture
 
-_Blended_ has it's roots in [EAI](https://en.wikipedia.org/wiki/Enterprise_application_integration) and was designed primarily to be used as a communication backbone in distributed enterprise. The company had a centralized IT with several backend applications and stores/offices  in several countries.
+_Blended_ has it's roots in [EAI](https://en.wikipedia.org/wiki/Enterprise_application_integration) and was designed primarily to be used as a communication backbone in a distributed enterprise. The company has a centralized IT with several backend applications and stores/offices  in several countries.
 
-The backend applications communicate with each other over a JMS backbone. This backbone is also used to provide data to the stores and keep it up to date and to collect data from the stores to be processed in the central applications. For montoring and security reasons, each shop was defined with a dedicated channel to push data to the shop, while the data center collects data from country specific channels that the shops use to send their data to. As a result, from the perspective og any shop all data flows through the same channel and therefore the differentiation of business cases must be encoded within the messages.
+The backend applications communicate with each other over a JMS backbone. This backbone is also used to provide data to the stores and keep it up to date and to collect data from the stores to be processed in the central applications. For montoring and security reasons, each shop is defined with a dedicated channel to push data to the shop, while the data center collects data from country specific channels that the shops use to send their data to. As a result, from the perspective of any shop all data flows through the same channel and therefore the differentiation of business cases must be encoded within the messages.
 
 ### Remote location architecture
 
 As a result, within the shops we have at least one _shop container_ which serves as communication partner for the backend applications. Some of the shop specific applications may require that the data is pushed different machines. This is the case for applications that require data import/export by using the local file system. In these cases, the shop may require the installation of one or more _secondary containers_.
 
-These secondary containers __never__ communicate witrh the datacenter directly, but use the _shop container_ as their messaging relay. In order to keep the shop in itself operating even if the connectivity to the data center is lost, the _shop container_ and the associated _secondary containers_ are connected to each other with a shop internal JMS backbone, which is connected to the data center by the means of a store and forward mechanism.
+These secondary containers __never__ communicate with the datacenter directly, but use the _shop container_ as their messaging relay. In order to keep the shop in itself operating even if the connectivity to the data center is lost, the _shop container_ and the associated _secondary containers_ are connected to each other with a shop internal JMS backbone, which is connected to the data center by the means of a store and forward mechanism.
 
 For resilience, the _shop containers_ should be run in a cluster.
 
@@ -65,21 +65,21 @@ All _containers_ within the shop can communicate with each other using the shop'
 
 ### Messaging architecture
 
-All messages are routed vie the _shop container_ using the same services. Since we are using JMS messages, we can assume the we have a message body and custom message headers to transport information.
+All messages are routed via the _shop container_ using the same services. Since we are using JMS messages, we can assume that we have a message body and custom message headers to transport information.
 
-Within the message we require an identifier to denote the business case the message belongs to. This business case identifier determines the routing rules that shall be applied to the message moving through the container.
+Within the message we require an identifier to denote the business case the message belongs to. This business case identifier determines the routing rules that shall be applied to the message moving through the _container_.
 
 {{< hint info >}}
 A business case __price__ may indicate that the message shall be routed to the _shop.price_ messaging channel, where a cash desk application may be listening as a consumer.
 
-A busines case __payment__ may indicate that the message sahll be routed the the _central.payments_ messaging channel, where a central application may be listening asa consumer.
+A busines case __payment__ may indicate that the message shall be routed to the _central.payments_ messaging channel, where a central application may be listening as a consumer.
 {{< /hint >}}
 
-Keeping these examples in mind we can see that the _shop container_ must be able to route message independent from the source or destination messaging provider. Also, since the _shop container_ should be able to operate regardless whether it is currently connected to the central application, the overall communication is split into an _inbound bridge_, an _outbound bridge_ and a _dispatcher_.
+Keeping these examples in mind we can see that the _shop container_ must be able to route message independently from the source or destination messaging provider. Also, since the _shop container_ should be able to operate regardless whether it is currently connected to the central application, the overall communication is split into an _inbound bridge_, an _outbound bridge_ and a _dispatcher_.
 
 The _inbound bridge_ consumes messages from central messaging channels and places them in shop local messaging channels for further processing.
 
-The _outbound bridge_ consumes messages from shop local messagin channels and places them in central messaging channels.
+The _outbound bridge_ consumes messages from shop local messaging channels and places them in central messaging channels.
 
 The _dispatcher_ consumes messages from a local dispatcher messaging channel, enriches the message with routing information and either
 
@@ -95,13 +95,13 @@ Besides this general message flow architecture, the _usual_ requirements apply:
 * No messages must be be lost
 * Messages must be tracked from _shop entry_ to _shop exit_ with enough information to gather business case related statistics for message processing
 * All routing information is parametrized and if required must be kept in message headers
-* The _dispatcher_ must not modify the message content nor shall it be required to read it
+* The _dispatcher_ must not modify the message body nor shall it be required to read it
 * The message providers must be pluggable, so that migration between JMS providers is possible
-* The _dispatcher_ ideally does not have knowledge whether it processes messages originating from JMS or some other messaging backbone such as Kafka or an AMQP or MZTT capable backbone. For testing purposes messages might be generated or read from the file system.
+* The _dispatcher_ ideally does not have knowledge whether it processes messages originating from JMS or some other messaging backbone such as Kafka or an AMQP or a MQTT capable backbone. For testing purposes messages might be generated or read from the file system.
 
 ### Proxying
 
-More and more backend application offer REST services rather than JMS. As some of the remote application move at a different speed in terms of their development, in some cases a protocal mapping JMS <-> REST is required. This mapping shall be configrable, so that new use cases can be adopted without coding.
+More and more backend applications offer REST services rather than JMS. As some of the shop applications move at a different speed in terms of their development, in some cases a protocol mapping JMS <-> REST is required. This mapping shall be configrable, so that new use cases can be adopted without coding.
 
 Within the shop architecture, the protocol mapping should be available to all _containers_ as services within the _shop container_.
 
