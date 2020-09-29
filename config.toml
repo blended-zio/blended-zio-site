@@ -7,7 +7,8 @@ enableGitInfo = true
 
 [params]
   BookRepo = "https://github.com/blended-zio/blended-zio-site"
-  GitRibbon = "Fork me on Github"
+  GitCodeRibbon = "Fork me on Github"
+  GitEditRibbon = "Edit me on Github"
   BookMenuBundle = "/menu"
 
 [markup]

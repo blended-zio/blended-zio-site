@@ -97,6 +97,7 @@
 }
 
 .git-fork-ribbon.left-top, .git-fork-ribbon.left-bottom {
+
   right: auto;
   left: 0;
 }
@@ -107,6 +108,8 @@
 }
 
 .git-fork-ribbon.left-top:before, .git-fork-ribbon.left-top:after, .git-fork-ribbon.left-bottom:before, .git-fork-ribbon.left-bottom:after {
+  /* Set the base colour */
+  background-color: #a00;
   right: auto;
   left: -3.23em;
 }

@@ -1,6 +1,4 @@
 ---
-giturl : "https://github.com/blended-zio/blended-zio-site"
-gitribbon : "Edit me on Github"
 ---
 # Blended ZIO
 

@@ -11,9 +11,10 @@ The MBean Server facade provides read only access to the `MBeanServer` of the un
 
 The corresponding [implementation](https://github.com/woq-blended/blended/blob/main/blended.jmx/jvm/src/main/scala/blended/jmx/internal/BlendedMBeanServerFacadeImpl.scala) is implemented on top of some case classes to represent the JMX objects. The various methods in general return instances of `Try` after executing the calls to the `MBeanServer`.
 
-{{< hint info >}}
-The ZIO implementation could reuse the implementation of _Blended 3_ and simply lift the `Try` instances to effects by using `ZIO.fromEffect`.
-{{< /hint >}}
+{{< button relref="mbeanserverfacade" >}}
+MBean Server implementation details
+{{< /button >}}
+
 
 ## Publish arbitrary case classes as JMX objects
 
@@ -25,9 +26,9 @@ To publish a value within _Blended 3_, other modules can simply publish case cla
 
 The implementation is completed by a [MBeanManger actor](https://github.com/woq-blended/blended/blob/main/blended.jmx/jvm/src/main/scala/blended/jmx/internal/ProductMBeanManagerImpl.scala) which collects those published values from the event stream and creates or updates the MBeans within the MBean server accordingly.
 
-{{< hint info >}}
-The ZIO implementation should migrate the actor based solution to a ZIO module and provide the service via a ZLayer to other modules within _Blended ZIO_.
-{{< /hint >}}
+{{< button relref="mbeanpublisher" >}}
+MBean publisher implementation details
+{{< /button >}}
 
 ## Service invocation metrics
 
@@ -46,14 +47,17 @@ Within _Blended 3_ this is implemented by publishing corresponding events on the
 The ZIO implementation should migrate the actor based solution to a ZIO module and provide the service via a ZLayer to other modules within _Blended ZIO_. Also, the publishing of the group summaries to should be decoupled from the collector Service and implemented as an a service, which requires the collector within it's environment.
 {{< /hint >}}
 
-[Read more on the implementation details](servicemetrics)
+{{< button relref="servicemetrics" >}}
+Read more on the implementation details
+{{< /button >}}
 
 ## Migration ToDo's
 
 * [x] Service Invocation Metrics
-  * [ ] Implement the service access, so that a singleton instance will be used
+  * [x] Implement the service access, so that a singleton instance will be used
+  * [ ] Review The singleton implementation as it uses an unsaferun method to initialize the TMaps used to hold the internal service state
   * [ ] Refactor the tests to use ZIO's property based testing
-* [ ] MBeanServer Facade
+* [x] MBeanServer Facade
 * [ ] JMX Publisher for arbitrary case classes
 
 

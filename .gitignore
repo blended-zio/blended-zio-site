@@ -2,3 +2,4 @@ public
 .metals
 .vscode
 ftpsync.sh
+*.iml

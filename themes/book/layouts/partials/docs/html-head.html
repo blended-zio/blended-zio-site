@@ -38,6 +38,26 @@
   {{ printf `<link rel="%s" type="%s" href="%s" title="%s" />` .Rel .MediaType.Type .Permalink $.Site.Title | safeHTML }}
 {{ end -}}
 
+
+<!-- Git Ribbons -->
+{{ if .Params.giturl }}
+{{ $codeRibbon := .Site.Params.GitCodeRibbon }}
+
+<a class="git-fork-ribbon"
+   href="{{ .Params.giturl }}"
+   data-ribbon="{{ $codeRibbon }}" title="{{ $codeRibbon }}">
+   {{ $codeRibbon }}
+</a>
+{{ end }}
+
+{{ $editRibbon := .Site.Params.GitEditRibbon }}
+
+<a class="git-fork-ribbon left-top"
+   href="{{ .Site.Params.BookRepo }}"
+   data-ribbon="{{ $editRibbon }}" title="{{ $editRibbon }}">
+  {{ $editRibbon }}
+</a>
+
 {{ "<!--" | safeHTML }}
 Made with Book Theme
 https://github.com/alex-shpak/hugo-book
