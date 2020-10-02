@@ -15,7 +15,6 @@ The corresponding [implementation](https://github.com/woq-blended/blended/blob/m
 MBean Server implementation details
 {{< /button >}}
 
-
 ## Publish arbitrary case classes as JMX objects
 
 _Blended 3_ implements a mapping from arbitrary case classes to Dynamic MBeans. This mapping requires that all attributes of the case class are of a type supported by the [Open MBean specification](https://docs.oracle.com/cd/E19206-01/816-4178/6madjde4v/index.html).
@@ -24,7 +23,9 @@ Any case class that shall be published to JMX requires a naming strategy which m
 
 To publish a value within _Blended 3_, other modules can simply publish case class instances to the Akka event stream.
 
-The implementation is completed by a [MBeanManger actor](https://github.com/woq-blended/blended/blob/main/blended.jmx/jvm/src/main/scala/blended/jmx/internal/ProductMBeanManagerImpl.scala) which collects those published values from the event stream and creates or updates the MBeans within the MBean server accordingly.
+The implementation in _Blended 3_ is completed by a [MBeanManger actor](https://github.com/woq-blended/blended/blob/main/blended.jmx/jvm/src/main/scala/blended/jmx/internal/ProductMBeanManagerImpl.scala) which collects those published values from the event stream and creates or updates the MBeans within the MBean server accordingly.
+
+For the _ZIO_ based implementation the actor has been replaced with a service that can be made via a `ZLayer` which transforms the service interface from messages to properly typed ZIO effects.
 
 {{< button relref="mbeanpublisher" >}}
 MBean publisher implementation details
@@ -55,9 +56,10 @@ Read more on the implementation details
 
 * [x] Service Invocation Metrics
   * [x] Implement the service access, so that a singleton instance will be used
-  * [ ] Review The singleton implementation as it uses an unsaferun method to initialize the TMaps used to hold the internal service state
+  * [x] Review The singleton implementation as it uses an unsaferun method to initialize the TMaps used to hold the internal service state
   * [ ] Refactor the tests to use ZIO's property based testing
 * [x] MBeanServer Facade
-* [ ] JMX Publisher for arbitrary case classes
+* [x] JMX Publisher for arbitrary case classes
+  * [ ] Revisit the publisher implementation to use locks rather than STM based operations as side effecting code such as registering MBeans might break the STM retries
 
 
