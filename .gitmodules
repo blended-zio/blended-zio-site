@@ -1,3 +1,6 @@
 [submodule "content/modules/blended-zio-jmx"]
 	path = content/modules/blended-zio-jmx
 	url = https://github.com/blended-zio/blended-zio-jmx.git
+[submodule "content/modules/blended-zio-core"]
+	path = content/modules/blended-zio-core
+	url = https://github.com/blended-zio/blended-zio-core.git

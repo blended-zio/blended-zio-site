@@ -6,4 +6,5 @@ headless: true
   * [Use cases](/blended_usecases)
 * Modules
   * [Blended ZIO Jmx]({{< relref "/docs/blended-zio-jmx/" >}})
-* [Blog]({{< relref "/posts" >}}) 
+  * [Blended ZIO Core]({{< relref "/docs/blended-zio-core/" >}})
+* [Blog]({{< relref "/posts" >}})
