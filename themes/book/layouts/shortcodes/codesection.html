@@ -1,5 +1,7 @@
 {{ $section := .Get "section" }}
-{{ $code := readFile (.Get "file") }}
+{{ $dirvar := .Get "dirref" }}
+{{ $basedir := $.Page.Params.Get $dirvar }}
+{{ $code := readFile (printf "%s/%s" $basedir (.Get "file")) }}
 {{ $lines := split $code "\n" }}
 {{ $scratch := newScratch }}
 

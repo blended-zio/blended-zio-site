@@ -1,5 +1,7 @@
 ---
-giturl: "https://github.com/blended-zio/blended-zio-jmx"
+giturl:  "https://github.com/blended-zio/blended-zio-jmx"
+jmxsrc:  "modules/blended-zio-jmx/blended-zio-jmx/jvm/src/main/scala"
+jmxtest: "modules/blended-zio-jmx/blended-zio-jmx/jvm/src/test/scala"
 ---
 # MBean Publisher
 
@@ -7,18 +9,18 @@ The MBean publisher is used to publish arbitrary case classes as `DynamicMBean`s
 
 As such the interface definition for the publishing service is:
 
-{{< codesection file="modules/blended-zio-jmx/ziojmx/jvm/blended/zio/jmx/publish/ProductMBeanPublisher.scala" section="service" >}}
+{{< codesection dirref="jmxsrc" file="blended/zio/jmx/publish/ProductMBeanPublisher.scala" section="service" >}}
 
 ## Using the MBean publisher
 
 The easiest way to use the MBeanPublisher is to make it available through a layer like it is done within the tests:
 
-{{< codesection file="modules/blended-zio-jmx/ziojmx/test/jvm/blended/zio/jmx/publish/MBeanPublisherTest.scala" section="layer" >}}
+{{< codesection dirref="jmxtest" file="blended/zio/jmx/publish/MBeanPublisherTest.scala" section="layer" >}}
 
 
 Then the MBeanPublisher can be used by simply passing a case class to `updateMBean`. For now the case class also needs to implement `Nameable` so that the proper `ObjectName` can be calculated.
 
-{{< codesection file="modules/blended-zio-jmx/ziojmx/test/jvm/blended/zio/jmx/publish/MBeanPublisherTest.scala" section="simple" >}}
+{{< codesection dirref="jmxtest" file="blended/zio/jmx/publish/MBeanPublisherTest.scala" section="simple" >}}
 
 In the test case we are also using the `MBeanServerFacade` to verify that the `MBean` has been published correctly and has the correct values.
 
@@ -34,7 +36,7 @@ The service implementation keeps track of the published values in a `TMap` with 
 
 To manipulate the `TMap` we use some helper methods to either create or update an entry within the `TMap`:
 
-{{< codesection file="modules/blended-zio-jmx/ziojmx/jvm/blended/zio/jmx/publish/ProductMBeanPublisher.scala" section="helpers" >}}
+{{< codesection dirref="jmxsrc" file="blended/zio/jmx/publish/ProductMBeanPublisher.scala" section="helpers" >}}
 
 {{< hint warning >}}
 The implementation uses [STM](https://zio.dev/docs/datatypes/datatypes_stm) under the covers. It is important to note that STM code should not include side effecting code that might not be idempotent (such as appending to a file or as in our case register an MBean). The reason for that
@@ -51,4 +53,4 @@ scenario.
 
 With the helper methods in place, actual service implementation methods is fairly straightforward:
 
-{{< codesection file="modules/blended-zio-jmx/ziojmx/jvm/blended/zio/jmx/publish/ProductMBeanPublisher.scala" section="methods" >}}
+{{< codesection dirref="jmxsrc" file="blended/zio/jmx/publish/ProductMBeanPublisher.scala" section="methods" >}}
