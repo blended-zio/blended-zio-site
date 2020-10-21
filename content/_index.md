@@ -20,7 +20,7 @@ Also with version 2 we finished our integration test framework to automatically 
 
 With version 3 of the framework we have replaced Karaf with our own OSGi container framework written in Scala and all Camel based integration flows have been rewritten to Akka Streams.
 
-For better orientation within the [original project](https://github.com/woq-blended/blended) and the migrated modules [here](/blended_usecases) is an overview of the _Blended_ use cases.
+For better orientation within the [original project](https://github.com/woq-blended/blended) and the migrated modules [here]({{ ref "/docs/blended_usecases.md" }}) is an overview of the _Blended_ use cases.
 
 ### Moving forward
 
@@ -32,13 +32,12 @@ This is easier said than done, but nevertheless I have created the _Blended ZIO_
 
   I have given some thought how to get from _Blended 3_ to _Blended ZIO_ and have weighed _refactor_ against _rewrite_. After going through quite a bit of documentation, asking on the forum etc. I am leaning towards a rewrite. This decision may swing into the other direction again, but even as I consider myself to be an experienced (Scala) developer I feel that refactoring towards to ZIO might require me to refactor modules which I am going to rewrite sooner or later anyway.
 
-* _Blended 3_ lives in a single repository and has grown to more than 60 modules within that repo. While that is convenient for refactoring on the global project level, the entire build process sometimes lacks flexibility. The latter has been addressed by moving the build to [Mill](http://www.lihaoyi.com/mill/), but still the build process feels somewhat complicated. With Blended ZIO, the modules shall become smaller and concentrate on a specific functionality.
+* _Blended 3_ lives in a single repository and has grown to more than 60 modules within that repo. While that is convenient for refactoring on the global project level, the entire build process sometimes lacks flexibility. The latter has been addressed by moving the build to [Mill](http://www.lihaoyi.com/mill/), but still the build process feels somewhat complicated. With Blended ZIO, each module shall live in it's own repository with it's own release cycles and therefor become smaller and more manageable.
 
-* _Blended 3_ uses [OSGi](https://www.osgi.org/) as it's runtime within the JVM. Looking at [ZIO](https://zio.dev/) and it's ecosystem the first thing to note is that there is no OSGi support out of the box. So the question rises (again) whether _Blended_ shall stick to OSGi or not. At the end of the day OSGi was chosen because when _Blended_ was created, which was before today's virtualization techniques where available. We did need a runtime allowing in place updates of the deployed jars via a management API.
+* _Blended 3_ uses [OSGi](https://www.osgi.org/) as it's runtime within the JVM. Looking at [ZIO](https://zio.dev/) and it's ecosystem the first thing to note is that there is no OSGi support out of the box. So the question rises (again) whether _Blended_ shall stick to OSGi or not. At the end of the day OSGi was chosen because when _Blended_ was created, which was before today's virtualization techniques where available. We did need a runtime allowing in-place-updates of the deployed jars via a management API.
 
   As of version 3, the management API is read-only, the requirement for in place updates has vanished in favor of bundling the _Blended_ based applications statically and use [Ansible](https://www.ansible.com/) to roll out software updates - replacing and restarting the entire JVM. As a result, OSGI is merely used to maintain the dependencies between various services within the JVM to make sure everything is wired up correctly.
 
   From my understanding, within the ZIO ecosystem there are different options which at least deserve a closer look. One of the options is the [distage framework](https://izumi.7mind.io/distage/) which seems to promise most of the requirements we might have in our packaging.
 
-
-
+  As a consequence I will concentrate on the module functionality first without considering OSGi and will consider the packaging and dependency injection once I have ported a sufficient number of modules to test a small application.

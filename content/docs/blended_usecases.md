@@ -24,7 +24,7 @@ These secondary containers __never__ communicate with the datacenter directly, b
 
 For resilience, the _shop containers_ should be run in a cluster.
 
-{{< mermaid >}}
+{{< kroki imgType="mermaid" >}}
 flowchart LR
   subgraph Shop X
     Bx((Shop X)) --> FX1((Fs X1)) --> Bx
@@ -44,7 +44,7 @@ flowchart LR
   A((Datacenter)) --> Bx --> A
   A --> By --> A
   A --> Bz --> A
-{{< /mermaid >}}
+{{< /kroki >}}
 
 ## Application requirements
 

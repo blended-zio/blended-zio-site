@@ -1,0 +1,6 @@
+{{ $imgType := .Get "imgType" }}
+{{ $svgurl := printf "https://kroki.io/%s/svg/%s" $imgType (.Inner | kroki) }}
+
+<div width="100%">
+  {{ (getSVG $svgurl) | safeHTML }}
+</div>

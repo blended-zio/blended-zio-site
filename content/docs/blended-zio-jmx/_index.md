@@ -33,7 +33,7 @@ MBean publisher implementation details
 
 ## Service invocation metrics
 
-_Blended 3_ hasa mechanism to capture metrics for arbitrary service invocations. Each service invocation is triggered by a `ServiceInvocation Started` event, eventually followed by either an `ServiceInvocation Completed` or `ServiceInvocation Failed`. Service Invocation events are identified by a unique invocation id.
+_Blended 3_ has a mechanism to capture metrics for arbitrary service invocations. Each service invocation is triggered by a `ServiceInvocation Started` event, eventually followed by either an `ServiceInvocation Completed` or `ServiceInvocation Failed`. Service Invocation events are identified by a unique invocation id.
 
 Furthermore, any service invocation can be mapped to a group identifier, so that invocations belonging to the same group can be summarized:
 * the totoal invocation count
