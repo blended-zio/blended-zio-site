@@ -20,7 +20,7 @@ Also with version 2 we finished our integration test framework to automatically 
 
 With version 3 of the framework we have replaced Karaf with our own OSGi container framework written in Scala and all Camel based integration flows have been rewritten to Akka Streams.
 
-For better orientation within the [original project](https://github.com/woq-blended/blended) and the migrated modules [here]({{ ref "/docs/blended_usecases.md" }}) is an overview of the _Blended_ use cases.
+For better orientation within the [original project](https://github.com/woq-blended/blended) and the migrated modules [here]({{< relref "/docs/blended_usecases.md" >}}) is an overview of the _Blended_ use cases.
 
 ### Moving forward
 
