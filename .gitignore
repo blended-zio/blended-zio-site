@@ -2,5 +2,6 @@ public
 .metals
 .vscode
 ftpsync.sh
+clean.sh
 *.iml
 .idea/
