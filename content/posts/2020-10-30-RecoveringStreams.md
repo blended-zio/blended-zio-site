@@ -17,7 +17,7 @@ streamstest:  "modules/blended-zio-streams/blended-zio-streams/jvm/src/test/scal
 
 In my last [article]({{< relref "/posts/2020-10-27-ZIOJms.md" >}}) I have shown how the ZIO stream API allows us to easily create streams for sending or receiving messages via JMS. Within the sample program we have seen that the streams terminate with an exception whenever the underlying JMS API raises encounters an error.
 
-One of the most common errors is that the connection is lost due to a network error. For long running applications we would like to initiate an automaticreconnect and either create a new stream or recover the existing stream. The advantage of recovering the existing stream is that we do not have to rewire the users of the streams. Any effect using the existing stream will be suspended until the reconnect has happened and then continue.
+One of the most common errors is that the connection is lost due to a network error. For long running applications we would like to initiate an automatic reconnect and either create a new stream or recover the existing stream. The advantage of recovering the existing stream is that we do not have to rewire the users of the streams. Any effect using the existing stream will be suspended until the reconnect has happened and then continue.
 
 In this article I will explore how we ca use the ZIO API to achieve such a transparent reconnect.
 
@@ -59,7 +59,7 @@ To recover a connection, we perform a JMS close on the existing connect and ente
 
 {{< codesection dirref="streamssrc" file="blended/zio/streams/jms/SingleConnectionFactory.scala" section="recover" >}}
 
-Finally, the `reconnect`effect simply triggers the recover if an underlying connection curretnly exists.
+Finally, the `reconnect`effect simply triggers the recover if an underlying connection currently exists.
 
 {{< codesection dirref="streamssrc" file="blended/zio/streams/jms/SingleConnectionFactory.scala" section="reconnect" >}}
 
@@ -71,9 +71,9 @@ The idea behind the recovering stream is that we connect to the JMS broker with 
 
 The idea manifests in `consumeUntilException` and `consumeForEver`. `consumeUntilException` uses the stream we have seen in the last [article]({{< relref "/posts/2020-10-27-ZIOJms.md#receiving-messages" >}}). It will stick all messages that have been received into a one element buffer which we can use later on to create the final stream visible to the outside world.
 
-`consumeForever` simply creates an effect which will cerate the JMS connection and then delegate to `consumeUnitlException`. The we apply the `catchAll` operator to that effect where we schedule the next iteration to `consumeForEver` after a recovery period.
+`consumeForever` simply creates an effect which will cerate the JMS connection and then delegate to `consumeUntilException`. The we apply the `catchAll` operator to that effect where we schedule the next iteration to `consumeForEver` after a recovery period.
 
-The final stream is then created from reapating the `take` operation of the buffer while `consumerForEver` is executing in it's own fiber.
+The final stream is then created from repeating the `take` operation of the buffer while `consumerForEver` is executing in it's own fiber.
 
 ### Why a one element buffer ?
 
@@ -89,7 +89,7 @@ We will explore the error handling further in another post.
 
 ## Creating a recoverable Sink (send messages)
 
-The idea behind the recoring sink is pretty much the same as for the recovering stream. The subtle difference is that we do not use the sink we have seen in the last [article]({{< relref "/posts/2020-10-27-ZIOJms.md#sending-messages" >}}), but the single send method.
+The idea behind the recovering sink is pretty much the same as for the recovering stream. The subtle difference is that we do not use the sink we have seen in the last [article]({{< relref "/posts/2020-10-27-ZIOJms.md#sending-messages" >}}), but the single send method.
 
 Apart from that, the pattern to create the recoverable sink is the same as for creating the stream.
 
@@ -97,10 +97,10 @@ Apart from that, the pattern to create the recoverable sink is the same as for c
 
 ## Sample log
 
-Below is a log excerpt of the sample app execution. Note the disconnect starting time `10770`, the recovery period of the connection and the recurring recory attempts of the consumer and producer stream until the reconnect has finished and everything can resume from `16550` onwards.
+Below is a log excerpt of the sample app execution. Note the disconnect starting time `10770`, the recovery period of the connection and the recurring recovery attempts of the consumer and producer stream until the reconnect has finished and everything can resume from `16550` onwards.
 
 ```
---- Entries ommitted
+--- Entries omitted
 2020-10-30-08:11.49.397 |     9458 | DEBUG : Received [Some(ActiveMQTextMessage {commandId = 37, responseRequired = true, messageId = ID:ToonBox-46199-1604041900408-4:1:1:1:16, originalDestination = null, originalTransactionId = null, producerId = ID:ToonBox-46199-1604041900408-4:1:1:1, destination = queue://sample, transactionId = null, expiration = 0, timestamp = 1604041909396, arrival = 0, brokerInTime = 1604041909396, brokerOutTime = 1604041909397, correlationId = null, replyTo = null, persistent = true, type = null, priority = 4, groupID = null, groupSequence = 0, targetConsumerId = null, compressed = false, userID = null, content = null, marshalledProperties = null, dataStructure = null, redeliveryCounter = 0, size = 1070, properties = null, readOnlyProperties = true, readOnlyBody = true, droppable = false, jmsXGroupFirstForConsumer = false, text = 2020-10-30-08.11.49.396})] with [JmsConsumer((amq:amq)(sampleCon)-(S-1604041900731-1)-(C-1)-sample)]
 2020-10-30-08:11.50.005 |    10066 | DEBUG : Message [2020-10-30-08.11.50.004] sent successfully with [JmsProducer((amq:amq)(sampleCon)-(S-1604041900731-2)-P-1)] to [sample]
 2020-10-30-08:11.50.005 |    10066 | DEBUG : Received [Some(ActiveMQTextMessage {commandId = 39, responseRequired = true, messageId = ID:ToonBox-46199-1604041900408-4:1:1:1:17, originalDestination = null, originalTransactionId = null, producerId = ID:ToonBox-46199-1604041900408-4:1:1:1, destination = queue://sample, transactionId = null, expiration = 0, timestamp = 1604041910004, arrival = 0, brokerInTime = 1604041910004, brokerOutTime = 1604041910005, correlationId = null, replyTo = null, persistent = true, type = null, priority = 4, groupID = null, groupSequence = 0, targetConsumerId = null, compressed = false, userID = null, content = null, marshalledProperties = null, dataStructure = null, redeliveryCounter = 0, size = 1070, properties = null, readOnlyProperties = true, readOnlyBody = true, droppable = false, jmsXGroupFirstForConsumer = false, text = 2020-10-30-08.11.50.004})] with [JmsConsumer((amq:amq)(sampleCon)-(S-1604041900731-1)-(C-1)-sample)]
@@ -135,7 +135,7 @@ Below is a log excerpt of the sample app execution. Note the disconnect starting
 2020-10-30-08:11.56.783 |    16844 | DEBUG : Received [Some(ActiveMQTextMessage {commandId = 6, responseRequired = true, messageId = ID:ToonBox-46199-1604041900408-4:2:1:1:2, originalDestination = null, originalTransactionId = null, producerId = ID:ToonBox-46199-1604041900408-4:2:1:1, destination = queue://sample, transactionId = null, expiration = 0, timestamp = 1604041916492, arrival = 0, brokerInTime = 1604041916493, brokerOutTime = 1604041916780, correlationId = null, replyTo = null, persistent = true, type = null, priority = 4, groupID = null, groupSequence = 0, targetConsumerId = null, compressed = false, userID = null, content = null, marshalledProperties = null, dataStructure = null, redeliveryCounter = 0, size = 1070, properties = null, readOnlyProperties = true, readOnlyBody = true, droppable = false, jmsXGroupFirstForConsumer = false, text = 2020-10-30-08.11.52.295})] with [JmsConsumer((amq:amq)(sampleCon)-(S-1604041916777-2)-(C-1)-sample)]
 2020-10-30-08:11.57.123 |    17184 | DEBUG : Message [2020-10-30-08.11.57.122] sent successfully with [JmsProducer((amq:amq)(sampleCon)-(S-1604041916487-1)-P-1)] to [sample]
 2020-10-30-08:11.57.123 |    17184 | DEBUG : Received [Some(ActiveMQTextMessage {commandId = 11, responseRequired = true, messageId = ID:ToonBox-46199-1604041900408-4:2:1:1:3, originalDestination = null, originalTransactionId = null, producerId = ID:ToonBox-46199-1604041900408-4:2:1:1, destination = queue://sample, transactionId = null, expiration = 0, timestamp = 1604041917122, arrival = 0, brokerInTime = 1604041917122, brokerOutTime = 1604041917123, correlationId = null, replyTo = null, persistent = true, type = null, priority = 4, groupID = null, groupSequence = 0, targetConsumerId = null, compressed = false, userID = null, content = null, marshalledProperties = null, dataStructure = null, redeliveryCounter = 0, size = 1070, properties = null, readOnlyProperties = true, readOnlyBody = true, droppable = false, jmsXGroupFirstForConsumer = false, text = 2020-10-30-08.11.57.122})] with [JmsConsumer((amq:amq)(sampleCon)-(S-1604041916777-2)-(C-1)-sample)]
---- Entries ommitted
+--- Entries omitted
 ```
 
 ## Conclusion

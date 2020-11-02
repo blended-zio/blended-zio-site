@@ -4,7 +4,7 @@ title: "Blended Container Architecture"
 
 # Service based containers
 
-A JVM executing a blended application will be referenced to as a _blended container_. When _blended_ was started in it's first version, it has been a Java application runing inside a J2EE server, which everyone referred to as a container. Over time _blended_ has evolved to a stand-alone Scala application on top of OSGi, but the term _container_ has stuck.
+A JVM executing a blended application will be referenced to as a _blended container_. When _blended_ was started in it's first version, it has been a Java application running inside a J2EE server, which everyone referred to as a container. Over time _blended_ has evolved to a stand-alone Scala application on top of OSGi, but the term _container_ has stuck.
 
 A typical _blended environment_ consists of several _blended containers_ distributed across geographical regions throughout the enterprise and the core use case for a _blended environment_ is to provide a communication backbone across the enterprise for other applications. As such _blended_ is the layer to realize enterprise level deployment policies such as enforcing security, connection management and general message routing.
 
@@ -13,7 +13,7 @@ To achieve this, _blended_ makes use of other enterprise applications such as me
 {{< hint info >}}
 For example, within _Blended 3_ the JMS connectivity is realized as a service which is offered to other modules with the `ConnectionFactory` interface defined in the [JMS specification](https://download.oracle.com/otndocs/jcp/7195-jms-1.1-fr-spec-oth-JSpec/). Under the covers the implementation uses a keep alive mechanism to ensure that JMS connections are alive and operational.
 
-Another example is a `CertificateManager` managing the key- and truststore of a _blended container_. Within _Blended 3_, an implementation with self signed certificates and another based on the [`SCEP` protocol](https://en.wikipedia.org/wiki/Simple_Certificate_Enrollment_Protocol) to provision certificates exist. These certificates are used by the `SSLContext` service, which is in turn used by all modules that need to offer a SSL based server socket.
+Another example is a `CertificateManager` managing the key- and trust-store of a _blended container_. Within _Blended 3_, an implementation with self signed certificates and another based on the [`SCEP` protocol](https://en.wikipedia.org/wiki/Simple_Certificate_Enrollment_Protocol) to provision certificates exist. These certificates are used by the `SSLContext` service, which is in turn used by all modules that need to offer a SSL based server socket.
 {{< /hint >}}
 
 ## Container types
@@ -61,7 +61,7 @@ For example, some containers contain an embedded [ActiveMQ](https://activemq.apa
 If containers of the same type are identical in terms of their libraries and configuration files and only differ within their environment variables, it is very easy to automate the deployment by different means:
 
 * [Docker](https://www.docker.com/) images can be defined around the deployment archive and the environment variables are the configuration points to instantiate a docker container.
-* A [Kubernetes](https://kubernetes.io/) deployment consisting of several _blended containers_ - potentially of different types can be defined on top og the docker images simply by templating the injection of the environmant variables.
-* Deployment to physical machines can be realized by tools such as [Ansible](https://www.ansible.com/) simply by extracting the deployment archive to the target machine and then use a templatng mechanism to create a script exposing the required environment variables.
+* A [Kubernetes](https://kubernetes.io/) deployment consisting of several _blended containers_ - potentially of different types can be defined on top og the docker images simply by templating the injection of the environment variables.
+* Deployment to physical machines can be realized by tools such as [Ansible](https://www.ansible.com/) simply by extracting the deployment archive to the target machine and then use a templating mechanism to create a script exposing the required environment variables.
 
 The creation of docker images can and should be automated within the build environment.

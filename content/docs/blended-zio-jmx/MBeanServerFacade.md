@@ -21,7 +21,7 @@ of the `live` service as we might come up with `test` instances at some point th
 does not require any logging at all.
 
 We will use the [zio-logging](https://zio.github.io/zio-logging/) API to perform the actual logging. See
-[this post]({{< ref "/posts/2020-09-28-ZIOLogging.md" >}}) for more details on injecting different logging backends into the
+[this post]({{< ref "/posts/2020-09-28-ZIOLogging.md" >}}) for more details on injecting different logging back-ends into the
 `live` service instance.
 {{< /hint >}}
 
@@ -56,11 +56,11 @@ simple types this is straight forward:
 
 {{< codesection dirref="jmxsrc" file="blended/zio/jmx/JmxAttributeCompanion.scala" section="simple" >}}
 
-To map the complex data we will rely on ZIO's `collectPar` operator:
+To map the complex data we will rely on the ZIO `collectPar` operator:
 
 {{< codesection dirref="jmxsrc" file="blended/zio/jmx/JmxAttributeCompanion.scala" section="tabdata" >}}
 
-Note, that whithin `JmxAttributeCompanion` the overall signature is
+Note, that within `JmxAttributeCompanion` the overall signature is
 
 ```scala
 def make(v: Any): ZIO[Any, IllegalArgumentException, AttributeValue[_]]

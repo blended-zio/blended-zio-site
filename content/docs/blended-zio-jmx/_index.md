@@ -36,7 +36,7 @@ MBean publisher implementation details
 _Blended 3_ has a mechanism to capture metrics for arbitrary service invocations. Each service invocation is triggered by a `ServiceInvocation Started` event, eventually followed by either an `ServiceInvocation Completed` or `ServiceInvocation Failed`. Service Invocation events are identified by a unique invocation id.
 
 Furthermore, any service invocation can be mapped to a group identifier, so that invocations belonging to the same group can be summarized:
-* the totoal invocation count
+* the total invocation count
 * the count of currently active invocations
 * the count of failed invocations
 * the count of succeeded invocations
@@ -57,7 +57,7 @@ Read more on the implementation details
 * [x] Service Invocation Metrics
   * [x] Implement the service access, so that a singleton instance will be used
   * [x] Review The singleton implementation as it uses an unsaferun method to initialize the TMaps used to hold the internal service state
-  * [ ] Refactor the tests to use ZIO's property based testing
+  * [ ] Refactor the tests to use ZIO property based testing
 * [x] MBeanServer Facade
 * [x] JMX Publisher for arbitrary case classes
   * [ ] Revisit the publisher implementation to use locks rather than STM based operations as side effecting code such as registering MBeans might break the STM retries

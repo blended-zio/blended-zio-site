@@ -9,7 +9,7 @@ Functionality that is required by all _blended_ containers.
 
 ## Configuring Blended Containers
 
-As outlined [here]({{< relref "/docs/blended_container.md" >}}) all modules that require configuration should be able to use external configuration files containing place holders to specifiy lookups from environment variables or resolve encrypted values.
+As outlined [here]({{< relref "/docs/blended_container.md" >}}) all modules that require configuration should be able to use external configuration files containing place holders to specify lookups from environment variables or resolve encrypted values.
 
 For example, the configuration for an LDAP service might be:
 
@@ -28,7 +28,7 @@ For example, the configuration for an LDAP service might be:
 
 The ZIO ecosystem has a library called [zio-config](https://zio.github.io/zio-config/) which supports different sources such as property files, HOCON, YAML or even the command line. At the core of the library are ConfigDescriptors which can be used to read the config information into config case classes. The descriptors are also used to generate documentation for the available config options or reports over the configuration values used within the application.
 
-Following the [advice](https://discord.com/channels/629491597070827530/633028431000502273/767663251092930591) from zio-config's library author on discord, we introduce a `LazyConfigString` as follows:
+Following the [advice](https://discord.com/channels/629491597070827530/633028431000502273/767663251092930591) from the zio-config library author on discord, we introduce a `LazyConfigString` as follows:
 
 {{< codesection dirref="coresrc" file="blended/zio/core/config/LazyConfigString.scala" section="descriptor" >}}
 
@@ -113,7 +113,7 @@ The crypto service is defined as
 
 {{< codesection dirref="coresrc" file="blended/zio/core/crypto/CryptoSupport.scala" section="service" >}}
 
-The default implementation can be instantiated with a password, for convenience the code also contains a default password. The password can also be provided via a file. Essentially, the provided password is used to generate a key that is then used to create an instance of a CryptoService whgich simply wraps some Crypto methods from Java:
+The default implementation can be instantiated with a password, for convenience the code also contains a default password. The password can also be provided via a file. Essentially, the provided password is used to generate a key that is then used to create an instance of a CryptoService which simply wraps some Crypto methods from Java:
 
 {{< codesection dirref="coresrc" file="blended/zio/core/crypto/CryptoSupport.scala" section="crypto" >}}
 

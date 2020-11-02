@@ -14,13 +14,13 @@ For the sake of this article a _Blended_ based application instance running on t
 
 _Blended_ has it's roots in [EAI](https://en.wikipedia.org/wiki/Enterprise_application_integration) and was designed primarily to be used as a communication backbone in a distributed enterprise. The company has a centralized IT with several backend applications and stores/offices  in several countries.
 
-The backend applications communicate with each other over a JMS backbone. This backbone is also used to provide data to the stores and keep it up to date and to collect data from the stores to be processed in the central applications. For montoring and security reasons, each shop is defined with a dedicated channel to push data to the shop, while the data center collects data from country specific channels that the shops use to send their data to. As a result, from the perspective of any shop all data flows through the same channel and therefore the differentiation of business cases must be encoded within the messages.
+The backend applications communicate with each other over a JMS backbone. This backbone is also used to provide data to the stores and keep it up to date and to collect data from the stores to be processed in the central applications. For monitoring and security reasons, each shop is defined with a dedicated channel to push data to the shop, while the data center collects data from country specific channels that the shops use to send their data to. As a result, from the perspective of any shop all data flows through the same channel and therefore the differentiation of business cases must be encoded within the messages.
 
 ### Remote location architecture
 
 As a result, within the shops we have at least one _shop container_ which serves as communication partner for the backend applications. Some of the shop specific applications may require that the data is pushed different machines. This is the case for applications that require data import/export by using the local file system. In these cases, the shop may require the installation of one or more _secondary containers_.
 
-These secondary containers __never__ communicate with the datacenter directly, but use the _shop container_ as their messaging relay. In order to keep the shop in itself operating even if the connectivity to the data center is lost, the _shop container_ and the associated _secondary containers_ are connected to each other with a shop internal JMS backbone, which is connected to the data center by the means of a store and forward mechanism.
+These secondary containers __never__ communicate with the data-center directly, but use the _shop container_ as their messaging relay. In order to keep the shop in itself operating even if the connectivity to the data center is lost, the _shop container_ and the associated _secondary containers_ are connected to each other with a shop internal JMS backbone, which is connected to the data center by the means of a store and forward mechanism.
 
 For resilience, the _shop containers_ should be run in a cluster.
 
@@ -41,22 +41,22 @@ flowchart LR
     Bz --> FZ2((Fs Z2)) --> Bz
   end
 
-  A((Datacenter)) --> Bx --> A
+  A((Data-center)) --> Bx --> A
   A --> By --> A
   A --> Bz --> A
 {{< /kroki >}}
 
 ## Application requirements
 
-### Datacenter -> Shop
+### Data-center -> Shop
 
 Data is sent to an individual shop by placing a message in the shop specific channel, where the _shop container_ can consume them as a client to the central messaging backbone.
 
-### Shop -> Datacenter
+### Shop -> Data-center
 
 Data is provided from the shop via the _shop container_ which will place messages in the central, country specific messaging channel.
 
-### Intrashop
+### Intra-shop
 
 All _containers_ within the shop can communicate with each other using the shop's messaging backbone without involving the central messaging backbone at all.
 
@@ -69,7 +69,7 @@ Within the message we require an identifier to denote the business case the mess
 {{< hint info >}}
 A business case __price__ may indicate that the message shall be routed to the _shop.price_ messaging channel, where a cash desk application may be listening as a consumer.
 
-A busines case __payment__ may indicate that the message shall be routed to the _central.payments_ messaging channel, where a central application may be listening as a consumer.
+A business case __payment__ may indicate that the message shall be routed to the _central.payments_ messaging channel, where a central application may be listening as a consumer.
 {{< /hint >}}
 
 Keeping these examples in mind we can see that the _shop container_ must be able to route message independently from the source or destination messaging provider. Also, since the _shop container_ should be able to operate regardless whether it is currently connected to the central application, the overall communication is split into an _inbound bridge_, an _outbound bridge_ and a _dispatcher_.
@@ -98,7 +98,7 @@ Besides this general message flow architecture, the _usual_ requirements apply:
 
 ### Proxying
 
-More and more backend applications offer REST services rather than JMS. As some of the shop applications move at a different speed in terms of their development, in some cases a protocol mapping JMS <-> REST is required. This mapping shall be configrable, so that new use cases can be adopted without coding.
+More and more backend applications offer REST services rather than JMS. As some of the shop applications move at a different speed in terms of their development, in some cases a protocol mapping JMS <-> REST is required. This mapping shall be configurable, so that new use cases can be adopted without coding.
 
 Within the shop architecture, the protocol mapping should be available to all _containers_ as services within the _shop container_.
 
@@ -106,7 +106,7 @@ Within the shop architecture, the protocol mapping should be available to all _c
 
 ### Config as code
 
-The outlined use cases are mostly driven by configuration, which may become quite complex. Therefore we have made a decision early on, that the configuration files are treated as code and are packaged as part of a _container_ deployment. Furthermore, the fingerprints of the configfiles are recorded by the packaging process, to that we can detect ad hoc config changes that may have happened after _container_ rollout.
+The outlined use cases are mostly driven by configuration, which may become quite complex. Therefore we have made a decision early on, that the configuration files are treated as code and are packaged as part of a _container_ deployment. Furthermore, the fingerprints of the config-files are recorded by the packaging process, to that we can detect ad hoc config changes that may have happened after _container_ rollout.
 
 ### Static packaging
 
@@ -114,7 +114,7 @@ A _blended container_ has at least a common runtime and has - depending on it's 
 
 ### Certificate provisioning
 
-Each _container_ has potential services cummunicating via network sockets - especially JMS or HTTP server components. _Blended_ shall provide a general SSL Context Layer that all components requiring SSL supoport shall use. The SSL Context Layer shall be capable of retrieving a server SSL certificate, maintain it and configure the SSL Context to use the obtained certificate as servser side certificate.
+Each _container_ has potential services communicating via network sockets - especially JMS or HTTP server components. _Blended_ shall provide a general SSL Context Layer that all components requiring SSL support shall use. The SSL Context Layer shall be capable of retrieving a server SSL certificate, maintain it and configure the SSL Context to use the obtained certificate as server side certificate.
 
 The first implementations of the certificate provisioning shall be for self signed certificates and certificates obtained from a [SCEP](https://en.wikipedia.org/wiki/Simple_Certificate_Enrollment_Protocol) capable server.
 
@@ -128,6 +128,6 @@ The build process shall produce [docker](https://www.docker.com/) images that ca
 
 ### Kubernetes based integration tests
 
-The produced docker images shall be deployable in a kubernetes infrastructure, so that within a cluster one or more shops can be deployed. A specialized _blended container_, the _test container_ shall autodiscover the deployed containers and periodically generate test messages and examine the outcome. These tests shall run as long as the _test container_ is running.
+The produced docker images shall be deployable in a kubernetes infrastructure, so that within a cluster one or more shops can be deployed. A specialized _blended container_, the _test container_ shall auto-discover the deployed containers and periodically generate test messages and examine the outcome. These tests shall run as long as the _test container_ is running.
 
 These tests will expose resource leaks and allow to examine failover and restart behavior.

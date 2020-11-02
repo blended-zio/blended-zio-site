@@ -12,11 +12,11 @@ The actor currently understands 3 messages:
 
 * start service invocation
 * complete invocation with success
-* complete incocation with error
+* complete invocation with error
 
 In addition to this we would like to retrieve the current list of active invocations and also the current collected summaries.
 
-This leads to the follwing interface definition:
+This leads to the following interface definition:
 
 {{< codesection dirref="jmxsrc" file="blended/zio/jmx/metrics/ServiceMetrics.scala" section="service" >}}
 
@@ -36,7 +36,7 @@ First of all we need a couple of helpers helping us to manipulate the two maps. 
 
 Within the implementation the `update`method is responsible for recording the completion or failure for a given invocation id. Therefore we need to determine the currently active entry from our active map and also the existing summary. Note that if everything works as designed, the summary mst already exist at this point in time. However, either of these calls may fail with a ServiceMetricsException, which is reflected in the method signature.
 
-Once we have looked up the entries, we can simpy perform the required update and we are done.
+Once we have looked up the entries, we can simply perform the required update and we are done.
 
 {{< codesection dirref="jmxsrc" file="blended/zio/jmx/metrics/ServiceMetrics.scala" section="update" >}}
 
