@@ -1,7 +1,8 @@
 ---
 layout: page
 title: About
-tags: [WoQ, Way of Quality]
+tags: [Way of Quality]
+Summary: Disclaimers and Company Info
 ---
 
 ## Way of Quality GmbH

@@ -8,4 +8,4 @@ Under exploration
 
 See
 
-* [ZIO Streams with JMS]({{< relref "/posts/2020-10-27-ZIOJms.md" >}})
+* [Blog articles about Streams]({{< relref "/tags/streams/" >}})

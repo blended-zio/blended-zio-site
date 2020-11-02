@@ -1,5 +1,6 @@
 ---
-tags: [WoQ, Way of Quality, Andreas Gies]
+tags: [Way of Quality]
+Summary: Andreas Gies short Bio
 ---
 
 # Andreas Gies {{< linebreak >}} Software Engineer
