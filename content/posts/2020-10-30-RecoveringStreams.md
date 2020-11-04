@@ -1,5 +1,5 @@
 ---
-title: Autorecovery for (JMS) Streams
+title: Auto-Recovery for (JMS) Streams
 date: "2020-10-30"
 tags:
   - ZIO
@@ -20,6 +20,10 @@ In my last [article]({{< relref "/posts/2020-10-27-ZIOJms.md" >}}) I have shown 
 One of the most common errors is that the connection is lost due to a network error. For long running applications we would like to initiate an automatic reconnect and either create a new stream or recover the existing stream. The advantage of recovering the existing stream is that we do not have to rewire the users of the streams. Any effect using the existing stream will be suspended until the reconnect has happened and then continue.
 
 In this article I will explore how we ca use the ZIO API to achieve such a transparent reconnect.
+
+{{< hint info >}}
+The complete source code used in this article can be found on [github](https://github.com/blended-zio/blended-zio-streams)
+{{< /hint >}}
 
 ## What we want to achieve
 
@@ -145,6 +149,3 @@ With very little code and simple patterns we could create ZIO streams on top of 
 ## Next steps
 
 The next step is to add a keep alive monitor to an established connection, which will trigger reconnects if a maximum number of keep alive messages have been missed.
-
-
-
