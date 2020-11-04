@@ -53,15 +53,15 @@ Under the covers we use a connection factory that lifts all JMS related calls to
 
 To achieve this, we wrap the connect method into a Semaphore and return the connection if it already exists, otherwise we create a new connection and store it.
 
-{{< codesection dirref="streamssrc" file="blended/zio/streams/jms/SingleConnectionFactory.scala" section="connect" >}}
+{{< codesection dirref="streamssrc" file="blended/zio/streams/jms/ZIOJmsConnectionManager.scala" section="connect" >}}
 
 To recover a connection, we perform a JMS close on the existing connect and enter a recovery period. Within that period any execution of the `connect` effect will result in a `JMSException`.
 
-{{< codesection dirref="streamssrc" file="blended/zio/streams/jms/SingleConnectionFactory.scala" section="recover" >}}
+{{< codesection dirref="streamssrc" file="blended/zio/streams/jms/ZIOJmsConnectionManager.scala" section="recover" >}}
 
 Finally, the `reconnect`effect simply triggers the recover if an underlying connection currently exists.
 
-{{< codesection dirref="streamssrc" file="blended/zio/streams/jms/SingleConnectionFactory.scala" section="reconnect" >}}
+{{< codesection dirref="streamssrc" file="blended/zio/streams/jms/ZIOJmsConnectionManager.scala" section="reconnect" >}}
 
 ## Creating a recoverable Stream (consume messages)
 
