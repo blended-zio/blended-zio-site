@@ -34,6 +34,11 @@ I will show a simple keep alive monitor, which doesn't know anything about JMS o
 The complete source code used in this article can be found on [github](https://github.com/blended-zio/blended-zio-streams)
 {{< /hint >}}
 
+## References to related posts
+
+* [Basic streams with JMS]({{< relref "/posts/2020-10-27-ZIOJms.md" >}})
+* [Auto Recovery for ZIO streams]({{< relref "/posts/2020-10-30-RecoveringStreams.md" >}})
+
 ## A simple Keep Alive monitor
 
 A keep alive monitor is more or less a counter that is increased at certain intervals. It can be reset by sending it `alive` signals. Whenever
@@ -127,11 +132,6 @@ We have added a simple keep alive mechanism to the JMS connections we have discu
 auto recovery and triggers a reconnect once a limit of maximum missed keep alives has been reached. The reconnect then triggers the recovery and reconnect as defined for auto recovery.
 
 For the users of the stream the keep alive and potential reconnect is completely transparent. Further, the `onConnect` effect would allow us to instrument the connection factory with other effects - for example to collect metrics or publish JMX information.
-
-### References to previous posts
-
-* [Basic streams with JMS]({{< relref "/posts/2020-10-27-ZIOJms.md" >}})
-* [Auto Recovery for ZIO streams]({{< relref "/posts/2020-10-30-RecoveringStreams.md" >}})
 
 ## Next steps
 
